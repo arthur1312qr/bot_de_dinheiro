@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-flask
-requests
-numpy
-pandas
-beautifulsoup4
-=======
-flask
-requests
-numpy
-pandas
-beautifulsoup4
->>>>>>> 1bb16bdc4e5d3ba9341b3a8f55204ba5645deb87
+Flask==2.2.5
+requests==2.31.0
+pandas==2.2.2
+numpy==1.26.5
+beautifulsoup4==4.12.2
+python-dotenv==1.0.0
+gunicorn==20.1.0
