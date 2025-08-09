@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 flask
 requests
 numpy
 pandas
 beautifulsoup4
+=======
+flask
+requests
+numpy
+pandas
+beautifulsoup4
+>>>>>>> 1bb16bdc4e5d3ba9341b3a8f55204ba5645deb87
