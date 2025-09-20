@@ -21,13 +21,21 @@ def webhook():
     symbol = data.get('symbol','WLF/USDT').upper()
     price = float(data.get('price', 0) or 0)
 
-    exchange.load_markets()
+    try:
+        exchange.load_markets()
+    except Exception as e:
+        return jsonify({'error':'load_markets_failed','msg':str(e)}), 500
+
     try:
         exchange.set_leverage(10, symbol)
     except Exception:
         pass
 
-    bal = exchange.fetch_free_balance()
+    try:
+        bal = exchange.fetch_free_balance()
+    except Exception as e:
+        return jsonify({'error':'fetch_balance_failed','msg':str(e)}), 500
+
     quote = symbol.split('/')[-1]
     base = symbol.split('/')[0]
     usdt = bal.get(quote, 0)
@@ -42,6 +50,8 @@ def webhook():
             order = exchange.create_market_buy_order(symbol, amount_base, params={'leverage':10, 'marginMode':'isolated'})
         elif action == 'SELL':
             base_amt = bal.get(base, 0)
+            if base_amt <= 0:
+                return jsonify({'error':'no_base_balance'}), 400
             order = exchange.create_market_sell_order(symbol, base_amt, params={'marginMode':'isolated'})
         else:
             return jsonify({'error':'invalid_action_or_balance'}), 400
